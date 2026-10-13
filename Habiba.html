@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Youssef & Habiba 💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rose:#e8739c;
+  --rose-dark:#c45a82;
+  --rose-soft:#fbe7ee;
+  --ink:#4a4a52;
+  --ink-soft:#8a8a94;
+  --paper:#ffffff;
+  --bg1:#fdf6f8;
+  --bg2:#f3eef6;
+  --ring: rgba(232,115,156,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  font-family:'Cairo',Arial,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, var(--bg2), transparent),
+    radial-gradient(1200px 600px at 110% 10%, var(--bg1), transparent),
+    linear-gradient(160deg,#fff 0%, var(--bg1) 60%, var(--bg2) 100%);
+  color:var(--ink);
+  min-height:100vh;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  overflow-x:hidden;
+}
+
+.hearts-bg{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+}
+.heart-float{
+  position:absolute;
+  bottom:-50px;
+  font-size:20px;
+  opacity:0;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{ transform: translateY(0) rotate(0deg); opacity:0; }
+  10%{ opacity:.6; }
+  90%{ opacity:.4; }
+  100%{ transform: translateY(-110vh) rotate(360deg); opacity:0; }
+}
+
+.password-screen{
+  position:fixed; inset:0; z-index:999;
+  display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(800px 500px at 20% 20%, rgba(232,115,156,.18), transparent),
+    radial-gradient(800px 500px at 85% 80%, rgba(196,90,130,.15), transparent),
+    linear-gradient(160deg,#fff 0%, var(--bg1) 50%, var(--bg2) 100%);
+  padding:20px;
+}
+.password-card{
+  background:var(--paper);
+  width:100%; max-width:380px;
+  padding:44px 34px;
+  border-radius:22px;
+  text-align:center;
+  box-shadow:0 25px 60px rgba(196,90,130,.18), 0 2px 10px rgba(0,0,0,.04);
+  animation:riseIn .7s ease;
+}
+.password-card .lock-badge{
+  width:64px; height:64px; margin:0 auto 18px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  border-radius:50%;
+  color:#fff;
+  box-shadow:0 10px 25px var(--ring);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.08); }
+}
+.password-card h1{
+  font-size:24px; font-weight:900; color:var(--ink);
+  margin-bottom:6px;
+}
+.password-card .sub{
+  color:var(--ink-soft); font-size:14px; margin-bottom:26px;
+}
+.password-card input{
+  width:100%; padding:14px 16px;
+  border:2px solid var(--rose-soft);
+  border-radius:12px;
+  font-size:16px; text-align:center;
+  letter-spacing:3px;
+  font-family:'Cairo',Arial,sans-serif;
+  color:var(--ink);
+  background:#fff;
+  transition:border-color .2s, box-shadow .2s;
+}
+.password-card input::placeholder{letter-spacing:0; color:#c6c6cf;}
+.password-card input:focus{
+  outline:none; border-color:var(--rose);
+  box-shadow:0 0 0 4px var(--ring);
+}
+.password-card button{
+  width:100%; margin-top:16px; padding:14px;
+  border:none; border-radius:12px;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:#fff; font-size:16px; font-weight:700;
+  font-family:'Cairo',Arial,sans-serif;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 10px 24px var(--ring);
+}
+.password-card button:hover{ transform:translateY(-2px); box-shadow:0 14px 30px var(--ring); }
+.password-card button:active{ transform:translateY(0); }
+.error-message{
+  color:var(--rose-dark); margin-top:14px; font-size:13px; font-weight:700;
+  display:none;
+}
+.error-message.show{ display:block; animation:shake .4s; }
+@keyframes shake{
+  0%,100%{ transform: translateX(0); }
+  25%{ transform: translateX(-8px); }
+  75%{ transform: translateX(8px); }
+}
+
+.container{
+  display:none;
+  min-height:100vh;
+  flex-direction:column;
+  align-items:center;
+  padding:40px 18px 60px;
+  position:relative;
+  z-index:1;
+}
+.container.show{ display:flex; }
+
+.header{ text-align:center; margin-bottom:36px; animation:riseIn .7s ease; }
+.header .kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--rose-dark); font-weight:700; font-size:13px;
+  background:var(--rose-soft); padding:6px 16px; border-radius:30px;
+  margin-bottom:14px;
+}
+.header h1{
+  font-size:clamp(28px,6vw,40px); font-weight:900; color:var(--ink);
+  margin-bottom:8px;
+}
+.header p{ color:var(--ink-soft); font-size:14px; }
+
+.messages-container{
+  width:100%; max-width:640px;
+  display:flex; flex-direction:column; gap:22px;
+  margin-bottom:40px;
+}
+
+.message-card{
+  position:relative;
+  background:var(--paper);
+  border-radius:18px;
+  padding:26px 26px 24px;
+  box-shadow:0 10px 30px rgba(74,74,82,.07);
+  border:1px solid rgba(0,0,0,.03);
+  overflow:hidden;
+  animation:riseIn .6s ease backwards;
+  transition: transform .3s, box-shadow .3s;
+}
+.message-card:not(.locked):hover{
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(74,74,82,.12);
+}
+.message-card::before{
+  content:"";
+  position:absolute; inset-inline-start:0; top:0; bottom:0;
+  width:5px;
+  background:linear-gradient(180deg, var(--rose), var(--rose-dark));
+}
+.day-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px; padding-bottom:14px;
+  border-bottom:1px dashed var(--rose-soft);
+}
+.day-label{ display:flex; flex-direction:column; gap:3px; }
+.day-number{ font-size:20px; font-weight:800; color:var(--ink); }
+.day-time{ font-size:11px; color:var(--ink-soft); }
+.day-emoji{ font-size:32px; line-height:1; }
+.message-text{
+  font-size:17px; line-height:1.9; color:var(--ink);
+  white-space:pre-wrap; word-wrap:break-word;
+}
+
+.message-card.locked{
+  background:linear-gradient(180deg,#faf9fb,#f4f2f6);
+  cursor: pointer;
+}
+.message-card.locked::before{ background:#d9d6de; }
+.message-card.locked .day-header{ border-bottom-color:#e4e1e8; }
+.message-card.locked .locked-body{
+  display:flex; align-items:center; gap:12px;
+  padding:14px 4px;
+  color:var(--ink-soft);
+}
+.message-card.locked .locked-body .icon{
+  width:38px; height:38px; flex:0 0 auto;
+  display:flex; align-items:center; justify-content:center;
+  background:#ece9ef; border-radius:50%; font-size:16px;
+}
+.message-card.locked .locked-body .text{ font-size:13.5px; }
+.message-card.locked .locked-body .countdown{
+  font-size:12px; color:var(--rose-dark); font-weight:700; margin-top:2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.final-message-card{
+  background:linear-gradient(160deg, #fff 0%, var(--rose-soft) 140%);
+  border:2px solid rgba(232,115,156,.35);
+  box-shadow:0 15px 40px rgba(196,90,130,.15);
+}
+.final-message-card::before{ background:linear-gradient(180deg, var(--rose-dark), var(--rose)); }
+.final-message-card .day-number{
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.final-message-card .message-text{
+  font-size:18px;
+  line-height: 2;
+}
+
+.music-banner{
+  position:fixed;
+  top:env(safe-area-inset-top, 0);
+  left:0;
+  right:0;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:white;
+  padding:12px 20px;
+  text-align:center;
+  z-index:1000;
+  box-shadow:0 4px 12px rgba(232,115,156,.3);
+  animation:slideDown .5s ease-out;
+  cursor:pointer;
+  display:none;
+}
+@keyframes slideDown {
+  from { transform:translateY(-100%); }
+  to { transform:translateY(0); }
+}
+.music-banner.hide {
+  animation:slideUp .5s ease-out forwards;
+}
+@keyframes slideUp {
+  from { transform:translateY(0); }
+  to { transform:translateY(-100%); }
+}
+.music-banner p{
+  margin:0;
+  font-size:14px;
+  font-weight:600;
+}
+.music-banner .close-btn{
+  position:absolute;
+  left:10px;
+  background:rgba(255,255,255,.2);
+  border:none;
+  color:white;
+  cursor:pointer;
+  padding:5px 10px;
+  border-radius:4px;
+  font-size:16px;
+  transition:.2s;
+}
+.music-banner .close-btn:hover{
+  background:rgba(255,255,255,.3);
+}
+
+body.has-music-banner{
+  padding-top:calc(env(safe-area-inset-top,0px) + 50px);
+}
+
+.music-box{
+  width:100%; max-width:640px;
+  background:var(--paper);
+  border-radius:18px;
+  padding:18px 22px;
+  display:flex; align-items:center; gap:16px;
+  box-shadow:0 10px 30px rgba(74,74,82,.07);
+  margin-bottom:22px;
+  animation: riseIn .6s ease;
+}
+.music-box .note{
+  width:44px; height:44px; flex:0 0 auto; border-radius:50%;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px;
+  animation: pulse 2s infinite;
+}
+.music-box .meta{ flex:1; min-width:0; }
+.music-box .meta .title{ font-weight:700; font-size:14px; color:var(--ink); }
+.music-box .meta .sub{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
+.music-box audio{ width:100%; margin-top:8px; height:34px; }
+
+.whatsapp-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:linear-gradient(135deg, #25D366, #20BA5A);
+  color:white;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:.85rem;
+  font-weight:600;
+  transition:all .3s;
+  text-decoration:none;
+  box-shadow:0 4px 12px rgba(37,211,102,.3);
+  font-family:'Cairo',Arial,sans-serif;
+  margin-top:12px;
+}
+
+.whatsapp-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px rgba(37,211,102,.4);
+}
+
+.whatsapp-btn:active{
+  transform:translateY(0);
+}
+
+.message-actions{
+  margin-top:14px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.info-box{
+  width:100%; max-width:640px;
+  background:var(--rose-soft);
+  border-radius:16px;
+  padding:16px 20px;
+  text-align:center;
+  color:var(--rose-dark);
+  font-size:12.5px;
+  line-height:1.8;
+}
+
+.progress-wrap{
+  width:100%; max-width:640px;
+  margin-bottom: 24px;
+}
+.progress-info{
+  display:flex; justify-content:space-between;
+  font-size:12px; color:var(--ink-soft);
+  margin-bottom:8px;
+  font-weight:700;
+}
+.progress-info span:last-child{ color: var(--rose-dark); }
+.progress-bar{
+  height:8px;
+  background: var(--rose-soft);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--rose), var(--rose-dark));
+  border-radius: 10px;
+  width: 0%;
+  transition: width .8s ease;
+}
+
+@keyframes riseIn{
+  from{ opacity:0; transform:translateY(16px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+@media (max-width:480px){
+  .message-card{ padding:20px; }
+  .day-emoji{ font-size:28px; }
+  .message-text{ font-size:16px; }
+  .final-message-card .message-text{ font-size:17px; }
+  .password-card{ padding:36px 26px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="music-banner" id="musicBanner">
+  <button class="close-btn" onclick="closeMusicBanner()">×</button>
+  <p>🎵 تشغيل الموسيقى... جرب الاستماع! 🎶</p>
+</div>
+
+<div class="password-screen" id="passwordScreen">
+  <div class="password-card">
+    <div class="lock-badge">💌</div>
+    <h1>Youssef & Habiba</h1>
+    <div class="sub">ادخل الباسورد عشان تفتحي القلب ده 🔐</div>
+    <input type="password" id="passwordInput" placeholder="• • • •" maxlength="20" />
+    <button onclick="checkPassword()">افتحي القلب ❤️</button>
+    <div class="error-message" id="errorMessage">الباسورد غلط، جرب تاني يا قمر 💔</div>
+  </div>
+</div>
+
+<div class="container" id="mainContainer">
+  <div class="header">
+    <div class="kicker">💗 رسالة كل يوم</div>
+    <h1>7 أيام من الحب</h1>
+    <p>كل رسالة بتتفتح بعد 24 ساعة من اللي قبلها</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span>الرسائل المفتوحة</span>
+      <span id="progressCount">0 / 7</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="music-box">
+    <div class="note">🎵</div>
+    <div class="meta">
+      <div class="title">أغنية "Habiba" 🎶</div>
+      <div class="sub">شغّليها وانتِ بتقرأي 💕</div>
+      <audio controls loop id="bgMusic">
+        <source src="https://files.catbox.moe/40ghkv.mp3" type="audio/mpeg">
+        متصفحك مش بيدعم الصوت.
+      </audio>
+    </div>
+  </div>
+
+  <div class="messages-container" id="messagesContainer"></div>
+
+  <div class="info-box">
+    💡 كل الرسائل هتتفتح لوحدها مع الوقت • اتمنى تكون كل لحظة فيها ذكرى حلوة
+  </div>
+</div>
+
+<script>
+const PASSWORD_HASH = hash("love");
+
+const TOTAL_DAYS = 7;
+const WAIT_TIME = 24 * 60 * 60 * 1000;
+const START_TIME_KEY = "yh_start_time";
+const UNLOCKED_KEY = "yh_unlocked";
+
+const messages = [
+  {
+    day: 1,
+    emoji: "💗",
+    time: "اليوم الأول",
+    text: "بجد أنا مش عارف عملتي فيا إيه، بس بقيت أفرح من قلبي لمجرد إني أشوفك قدامي."
+  },
+  {
+    day: 2,
+    emoji: "🌙",
+    time: "اليوم الثاني",
+    text: "إنتِ مش مجرد حبيبتي، إنتِ الشخص اللي بيخلّي يومي أحلى حتى لو اليوم كله كان زفت."
+  },
+  {
+    day: 3,
+    emoji: "🌹",
+    time: "اليوم الثالث",
+    text: "بحب تفاصيلك الصغيرة أوي، ضحكتك وطريقتك في الكلام وحتى الحاجات اللي إنتِ مش واخدة بالك منها."
+  },
+  {
+    day: 4,
+    emoji: "☀️",
+    time: "اليوم الرابع",
+    text: "نفسي أفضل الشخص اللي لما تزعلي تلاقيه جنبك، ولما تفرحي يبقى أول واحد نفسك تحكيله."
+  },
+  {
+    day: 5,
+    emoji: "💫",
+    time: "اليوم الخامس",
+    text: "ساعات ببقى عايز أقولك كلام كتير أوي، بس أول ما تبقي قدامي بنسى كل حاجة وببقى عايز أفضل قاعد جنبك وخلاص."
+  },
+  {
+    day: 6,
+    emoji: "❤️",
+    time: "اليوم السادس",
+    text: "مهما اتكلمت عن حبي ليكي، هحس إن الكلام قليل على كل الفرحة اللي دخلتيها حياتي."
+  },
+  {
+    day: 7,
+    emoji: "👑",
+    time: "اليوم السابع — الرسالة الأخيرة",
+    text: "يا حبيبتي،\n\nعارفة إيه أكتر حاجة بحبها؟ إنك إنتِ بالذات اللي في حياتي، وإن وسط كل الناس دي قلبي اختارك إنتِ...\n\nيا أحلى حاجة حصلتلي. ❤️",
+    final: true
+  }
+];
+
+function hash(str){
+  let h = 0;
+  for (let i = 0; i < str.length; i++){
+    h = ((h << 5) - h) + str.charCodeAt(i);
+    h |= 0;
+  }
+  return String(h);
+}
+
+function spawnHearts(){
+  const bg = document.getElementById("heartsBg");
+  const hearts = ["💗","💕","💖","💓","❤️","🌹"];
+  for (let i = 0; i < 18; i++){
+    const h = document.createElement("div");
+    h.className = "heart-float";
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left = Math.random()*100 + "%";
+    h.style.fontSize = (14 + Math.random()*20) + "px";
+    h.style.animationDuration = (10 + Math.random()*10) + "s";
+    h.style.animationDelay = (Math.random()*10) + "s";
+    bg.appendChild(h);
+  }
+}
+
+function getStartTime(){
+  let t = localStorage.getItem(START_TIME_KEY);
+  if (!t){
+    t = Date.now();
+    localStorage.setItem(START_TIME_KEY, t);
+  }
+  return parseInt(t);
+}
+
+function getUnlockTime(dayIndex){
+  return getStartTime() + (dayIndex * WAIT_TIME);
+}
+
+function isUnlocked(dayIndex){
+  const unlocked = JSON.parse(localStorage.getItem(UNLOCKED_KEY) || "[]");
+  if (unlocked.includes(dayIndex)) return true;
+  if (dayIndex === 0) return true;
+  return Date.now() >= getUnlockTime(dayIndex);
+}
+
+function markUnlocked(dayIndex){
+  const unlocked = JSON.parse(localStorage.getItem(UNLOCKED_KEY) || "[]");
+  if (!unlocked.includes(dayIndex)){
+    unlocked.push(dayIndex);
+    localStorage.setItem(UNLOCKED_KEY, JSON.stringify(unlocked));
+  }
+}
+
+function formatCountdown(ms){
+  const totalSec = Math.floor(ms / 1000);
+  const h = Math.floor(totalSec / 3600);
+  const m = Math.floor((totalSec % 3600) / 60);
+  const s = totalSec % 60;
+  return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+function checkPassword(){
+  const input = document.getElementById("passwordInput").value.trim();
+  const error = document.getElementById("errorMessage");
+  
+  if (hash(input) === PASSWORD_HASH){
+    document.getElementById("passwordScreen").style.display = "none";
+    document.getElementById("mainContainer").classList.add("show");
+    sessionStorage.setItem("yh_auth", "1");
+    startExperience();
+  } else {
+    error.classList.add("show");
+    document.getElementById("passwordInput").value = "";
+    setTimeout(()=> error.classList.remove("show"), 2500);
+  }
+}
+
+document.getElementById("passwordInput").addEventListener("keydown", (e)=>{
+  if (e.key === "Enter") checkPassword();
+});
+
+function renderMessages(){
+  const container = document.getElementById("messagesContainer");
+  container.innerHTML = "";
+
+  messages.forEach((msg, i) => {
+    const card = document.createElement("div");
+    card.className = "message-card";
+    card.style.animationDelay = (i * 0.1) + "s";
+    if (msg.final) card.classList.add("final-message-card");
+    
+    const unlocked = isUnlocked(i);
+    if (!unlocked) card.classList.add("locked");
+    if (unlocked) markUnlocked(i);
+
+    const header = `
+      <div class="day-header">
+        <div class="day-label">
+          <div class="day-number">اليوم ${msg.day}</div>
+          <div class="day-time">${msg.time}</div>
+        </div>
+        <div class="day-emoji">${unlocked ? msg.emoji : "🔒"}</div>
+      </div>
+    `;
+
+    const body = unlocked
+      ? `<div class="message-text">${msg.text}</div>`
+      : `<div class="locked-body">
+           <div class="icon">🔒</div>
+           <div>
+             <div class="text">الرسالة دي لسه مقفولة...</div>
+             <div class="countdown" data-day="${i}">جاري الحساب...</div>
+           </div>
+         </div>`;
+
+    card.innerHTML = header + body;
+    container.appendChild(card);
+  });
+
+  updateProgress();
+  updateCountdowns();
+}
+
+function updateCountdowns(){
+  document.querySelectorAll(".countdown").forEach(el => {
+    const day = parseInt(el.dataset.day);
+    const remain = getUnlockTime(day) - Date.now();
+    if (remain <= 0){
+      renderMessages();
+    } else {
+      el.textContent = "⏳ " + formatCountdown(remain);
+    }
+  });
+}
+
+function updateProgress(){
+  const unlockedCount = messages.filter((_, i) => isUnlocked(i)).length;
+  document.getElementById("progressCount").textContent = `${unlockedCount} / ${TOTAL_DAYS}`;
+  const percent = (unlockedCount / TOTAL_DAYS) * 100;
+  document.getElementById("progressFill").style.width = percent + "%";
+}
+
+function startExperience(){
+  renderMessages();
+  setInterval(() => {
+    updateCountdowns();
+    updateProgress();
+  }, 1000);
+}
+
+// 🎵 ميزة تشغيل الموسيقى التلقائية
+let musicPlayed = false;
+let musicBannerShown = false;
+
+function enableMusic() {
+  if (!musicPlayed) {
+    const audio = document.getElementById("bgMusic");
+    if (audio) {
+      audio.play().then(() => {
+        musicPlayed = true;
+        document.body.removeEventListener('click', enableMusic);
+        document.body.removeEventListener('touchstart', enableMusic);
+      }).catch(err => {
+        console.log('فشل تشغيل الموسيقى:', err);
+      });
+    }
+    
+    if (!musicBannerShown) {
+      const banner = document.getElementById('musicBanner');
+      if (banner) {
+        banner.style.display = 'block';
+        document.body.classList.add('has-music-banner');
+        musicBannerShown = true;
+      }
+    }
+  }
+}
+
+function closeMusicBanner() {
+  const banner = document.getElementById('musicBanner');
+  if (banner) {
+    banner.classList.add('hide');
+    setTimeout(() => {
+      banner.style.display = 'none';
+      document.body.classList.remove('has-music-banner');
+    }, 500);
+  }
+}
+
+document.body.addEventListener('click', enableMusic);
+document.body.addEventListener('touchstart', enableMusic);
+
+// 💬 ميزة زرار الواتساب
+function addWhatsAppButton(msgElement, dayNumber) {
+  const messageText = msgElement.querySelector('.message-text') || msgElement.querySelector('.locked-body');
+  if (messageText) {
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'message-actions';
+    
+    const whatsappBtn = document.createElement('a');
+    whatsappBtn.className = 'whatsapp-btn';
+    whatsappBtn.href = `https://wa.me/201210361453?text=يا حبيبي يوم ${dayNumber}: الرسالة شغلت قلبي 💕`;
+    whatsappBtn.target = '_blank';
+    whatsappBtn.innerHTML = '💬 واتساب';
+    
+    actionsDiv.appendChild(whatsappBtn);
+    messageText.parentElement.appendChild(actionsDiv);
+  }
+}
+
+const originalRenderMessages = renderMessages;
+renderMessages = function() {
+  originalRenderMessages.call(this);
+  
+  const container = document.getElementById("messagesContainer");
+  const cards = container.querySelectorAll(".message-card");
+  
+  cards.forEach((card, index) => {
+    const dayNum = messages[index].day;
+    addWhatsAppButton(card, dayNum);
+  });
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  spawnHearts();
+  
+  if (sessionStorage.getItem("yh_auth") === "1"){
+    document.getElementById("passwordScreen").style.display = "none";
+    document.getElementById("mainContainer").classList.add("show");
+    startExperience();
+  }
+});
+</script>
+</body>
+</html>
