@@ -1,21 +1,868 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0;url=Habiba.html">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>جارٍ التحويل…</title>
-    <script>
-      // Ensure immediate navigation in browsers that block meta refresh
-      window.location.replace('Habiba.html');
-    </script>
-    <style>
-      body{font-family: Arial, sans-serif; padding:40px; background:#fff; color:#222; text-align:center}
-      a{color:#e8739c;font-weight:700}
-    </style>
-  </head>
-  <body>
-    <h1>جارٍ التحويل إلى صفحة الحب ❤️</h1>
-    <p>إذا لم يتم التحويل تلقائياً، اضغطي <a href="Habiba.html">هنا لفتح الصفحة</a>.</p>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Habiba 💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rose:#e8739c;
+  --rose-dark:#c45a82;
+  --rose-soft:#fbe7ee;
+  --ink:#4a4a52;
+  --ink-soft:#8a8a94;
+  --paper:#ffffff;
+  --bg1:#fdf6f8;
+  --bg2:#f3eef6;
+  --ring: rgba(232,115,156,.25);
+  --green:#25D366;
+  --green-dark:#128C7E;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  font-family:'Cairo',Arial,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, var(--bg2), transparent),
+    radial-gradient(1200px 600px at 110% 10%, var(--bg1), transparent),
+    linear-gradient(160deg,#fff 0%, var(--bg1) 60%, var(--bg2) 100%);
+  color:var(--ink);
+  min-height:100vh;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  overflow-x:hidden;
+}
+
+.splash-screen{
+  position:fixed; inset:0; z-index:1000;
+  display:flex; align-items:center; justify-content:center; flex-direction:column;
+  background:
+    radial-gradient(800px 500px at 30% 30%, rgba(232,115,156,.25), transparent),
+    radial-gradient(800px 500px at 70% 70%, rgba(196,90,130,.2), transparent),
+    linear-gradient(160deg, #fff 0%, var(--rose-soft) 60%, #f9d8e4 100%);
+  overflow:hidden;
+  transition: opacity .8s ease, visibility .8s ease;
+  cursor: pointer;
+}
+.splash-screen.hide{ opacity:0; visibility:hidden; }
+
+.splash-hearts{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.splash-heart{ position:absolute; bottom:-50px; font-size:22px; opacity:0; animation: floatUp linear infinite; }
+
+.splash-content{ text-align:center; position:relative; z-index:2; }
+
+.splash-heart-icon{
+  font-size:80px; line-height:1; display:inline-block;
+  animation: heartPulse 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 10px 25px rgba(232,115,156,.4));
+}
+@keyframes heartPulse{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.15); }
+}
+
+.splash-name{
+  font-family:'Dancing Script', 'Cairo', cursive;
+  font-size: clamp(48px, 12vw, 72px);
+  font-weight:700;
+  color: var(--rose-dark);
+  margin-top: 20px; margin-bottom: 8px;
+  letter-spacing: 1px;
+  text-shadow: 0 3px 15px rgba(232,115,156,.25);
+  animation: nameFadeIn 1s ease .3s both;
+}
+@keyframes nameFadeIn{
+  from{ opacity:0; transform: translateY(15px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+.splash-line{
+  width: 120px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--rose), transparent);
+  margin: 0 auto 18px;
+  animation: lineGrow 1s ease .6s both;
+}
+@keyframes lineGrow{
+  from{ width:0; opacity:0; }
+  to{ width:120px; opacity:1; }
+}
+
+.splash-sub{
+  font-family:'Cairo', Arial, sans-serif;
+  font-size: clamp(14px, 3.5vw, 18px);
+  font-weight:600;
+  color: var(--ink);
+  letter-spacing: 2px;
+  opacity: .85;
+  animation: subFadeIn 1s ease .8s both;
+}
+@keyframes subFadeIn{
+  from{ opacity:0; transform: translateY(10px); }
+  to{ opacity:.85; transform: translateY(0); }
+}
+
+.splash-loader{
+  margin-top: 40px; width: 180px; height: 5px;
+  background: rgba(232,115,156,.2);
+  border-radius: 10px; overflow: hidden;
+  position: relative;
+  animation: loaderFadeIn .6s ease 1s both;
+}
+@keyframes loaderFadeIn{ from{ opacity:0; } to{ opacity:1; } }
+.splash-loader-fill{
+  position:absolute; top:0; left:0; bottom:0; width: 0%;
+  background: linear-gradient(90deg, var(--rose), var(--rose-dark));
+  border-radius: 10px;
+  animation: loadProgress 3s ease-in-out forwards;
+}
+@keyframes loadProgress{ 0%{ width:0%; } 100%{ width:100%; } }
+
+.password-screen{
+  position:fixed; inset:0; z-index:999;
+  display:none; align-items:center; justify-content:center;
+  background:
+    radial-gradient(800px 500px at 20% 20%, rgba(232,115,156,.18), transparent),
+    radial-gradient(800px 500px at 85% 80%, rgba(196,90,130,.15), transparent),
+    linear-gradient(160deg,#fff 0%, var(--bg1) 50%, var(--bg2) 100%);
+  padding:20px;
+}
+.password-screen.show{ display:flex; animation: riseIn .7s ease; }
+
+.password-card{
+  background:var(--paper); width:100%; max-width:380px;
+  padding:44px 34px; border-radius:22px; text-align:center;
+  box-shadow:0 25px 60px rgba(196,90,130,.18), 0 2px 10px rgba(0,0,0,.04);
+}
+.password-card .lock-badge{
+  width:64px; height:64px; margin:0 auto 18px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  border-radius:50%; color:#fff;
+  box-shadow:0 10px 25px var(--ring);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.08); }
+}
+.password-card h1{
+  font-family:'Dancing Script', 'Cairo', cursive;
+  font-size:32px; font-weight:700;
+  color:var(--rose-dark); margin-bottom:6px;
+}
+.password-card .sub{ color:var(--ink-soft); font-size:14px; margin-bottom:26px; }
+.password-card input{
+  width:100%; padding:14px 16px;
+  border:2px solid var(--rose-soft); border-radius:12px;
+  font-size:16px; text-align:center; letter-spacing:3px;
+  font-family:'Cairo',Arial,sans-serif;
+  color:var(--ink); background:#fff;
+  transition:border-color .2s, box-shadow .2s;
+}
+.password-card input::placeholder{letter-spacing:0; color:#c6c6cf;}
+.password-card input:focus{
+  outline:none; border-color:var(--rose);
+  box-shadow:0 0 0 4px var(--ring);
+}
+.password-card button{
+  width:100%; margin-top:16px; padding:14px;
+  border:none; border-radius:12px;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:#fff; font-size:16px; font-weight:700;
+  font-family:'Cairo',Arial,sans-serif;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 10px 24px var(--ring);
+}
+.password-card button:hover{ transform:translateY(-2px); box-shadow:0 14px 30px var(--ring); }
+.password-card button:active{ transform:translateY(0); }
+
+.error-message{
+  color:var(--rose-dark); margin-top:14px;
+  font-size:13px; font-weight:700; display:none;
+}
+.error-message.show{ display:block; animation:shake .4s; }
+@keyframes shake{
+  0%,100%{ transform: translateX(0); }
+  25%{ transform: translateX(-8px); }
+  75%{ transform: translateX(8px); }
+}
+
+.tutorial-screen{
+  position:fixed; inset:0; z-index:998;
+  display:none; align-items:center; justify-content:center;
+  background:
+    radial-gradient(800px 500px at 20% 20%, rgba(232,115,156,.2), transparent),
+    radial-gradient(800px 500px at 85% 80%, rgba(196,90,130,.18), transparent),
+    linear-gradient(160deg,#fff 0%, var(--bg1) 50%, var(--bg2) 100%);
+  padding:20px;
+  overflow-y:auto;
+}
+.tutorial-screen.show{ display:flex; animation: riseIn .7s ease; }
+
+.tutorial-card{
+  background:var(--paper);
+  width:100%; max-width:520px;
+  padding:34px 28px;
+  border-radius:22px;
+  box-shadow:0 25px 60px rgba(196,90,130,.18), 0 2px 10px rgba(0,0,0,.04);
+  max-height:90vh;
+  overflow-y:auto;
+  margin:auto;
+}
+
+.tutorial-card h2{
+  font-family:'Dancing Script', 'Cairo', cursive;
+  font-size:34px;
+  font-weight:700;
+  color:var(--rose-dark);
+  text-align:center;
+  margin-bottom:6px;
+}
+
+.tutorial-card .tutorial-sub{
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:13.5px;
+  margin-bottom:26px;
+  line-height:1.8;
+}
+
+.tutorial-item{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:14px 16px;
+  background: linear-gradient(135deg, #fff, #fdf6f8);
+  border-radius:14px;
+  margin-bottom:12px;
+  border:1px solid var(--rose-soft);
+  transition: transform .2s;
+}
+.tutorial-item:hover{ transform: translateX(-3px); }
+
+.tutorial-item .tut-icon{
+  width:42px; height:42px; flex:0 0 auto;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  border-radius:12px;
+  box-shadow: 0 6px 14px var(--ring);
+}
+
+.tutorial-item .tut-text h4{
+  font-size:14.5px;
+  font-weight:800;
+  color:var(--ink);
+  margin-bottom:4px;
+}
+.tutorial-item .tut-text p{
+  font-size:13px;
+  color:var(--ink-soft);
+  line-height:1.7;
+}
+
+.tutorial-btn{
+  width:100%;
+  margin-top:22px;
+  padding:15px;
+  border:none;
+  border-radius:14px;
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+  font-family:'Cairo',Arial,sans-serif;
+  cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 12px 26px var(--ring);
+}
+.tutorial-btn:hover{ transform:translateY(-2px); box-shadow:0 16px 32px var(--ring); }
+.tutorial-btn:active{ transform:translateY(0); }
+
+.hearts-bg{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.heart-float{ position:absolute; bottom:-50px; font-size:20px; opacity:0; animation: floatUp linear infinite; }
+@keyframes floatUp{
+  0%{ transform: translateY(0) rotate(0deg); opacity:0; }
+  10%{ opacity:.6; }
+  90%{ opacity:.4; }
+  100%{ transform: translateY(-110vh) rotate(360deg); opacity:0; }
+}
+
+.container{
+  display:none; min-height:100vh;
+  flex-direction:column; align-items:center;
+  padding:40px 18px 60px;
+  position:relative; z-index:1;
+}
+.container.show{ display:flex; }
+
+.header{ text-align:center; margin-bottom:36px; animation:riseIn .7s ease; }
+.header .kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--rose-dark); font-weight:700; font-size:13px;
+  background:var(--rose-soft); padding:6px 16px;
+  border-radius:30px; margin-bottom:14px;
+}
+.header h1{
+  font-family:'Dancing Script', 'Cairo', cursive;
+  font-size:clamp(34px,8vw,48px); font-weight:700;
+  color:var(--rose-dark); margin-bottom:8px;
+}
+.header p{ color:var(--ink-soft); font-size:14px; }
+
+.progress-wrap{ width:100%; max-width:640px; margin-bottom: 24px; }
+.progress-info{
+  display:flex; justify-content:space-between;
+  font-size:12px; color:var(--ink-soft);
+  margin-bottom:8px; font-weight:700;
+}
+.progress-info span:last-child{ color: var(--rose-dark); }
+.progress-bar{ height:8px; background: var(--rose-soft); border-radius: 10px; overflow: hidden; }
+.progress-fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--rose), var(--rose-dark));
+  border-radius: 10px; width: 0%;
+  transition: width .8s ease;
+}
+
+.audio-banner{
+  display:none; width:100%; max-width:640px;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:#fff; border-radius:14px; padding:14px 20px;
+  text-align:center; font-size:14px; font-weight:700;
+  margin-bottom:22px; cursor:pointer;
+  animation: pulse 2s infinite;
+  box-shadow:0 10px 25px var(--ring);
+}
+.audio-banner.show{ display:block; }
+
+.music-box{
+  width:100%; max-width:640px;
+  background:var(--paper); border-radius:18px;
+  padding:18px 22px;
+  display:flex; align-items:center; gap:16px;
+  box-shadow:0 10px 30px rgba(74,74,82,.07);
+  margin-bottom:22px;
+  animation: riseIn .6s ease;
+}
+.music-box .note{
+  width:44px; height:44px; flex:0 0 auto;
+  border-radius:50%;
+  background:linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:18px; animation: pulse 2s infinite;
+}
+.music-box .meta{ flex:1; min-width:0; }
+.music-box .meta .title{ font-weight:700; font-size:14px; color:var(--ink); }
+.music-box .meta .sub{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
+.music-box audio{ width:100%; margin-top:8px; height:34px; }
+
+.messages-container{
+  width:100%; max-width:640px;
+  display:flex; flex-direction:column; gap:22px;
+  margin-bottom:40px;
+}
+.message-card{
+  position:relative;
+  background:var(--paper); border-radius:18px;
+  padding:26px 26px 24px;
+  box-shadow:0 10px 30px rgba(74,74,82,.07);
+  border:1px solid rgba(0,0,0,.03);
+  overflow:hidden;
+  animation:riseIn .6s ease backwards;
+  transition: transform .3s, box-shadow .3s;
+}
+.message-card:not(.locked):hover{
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(74,74,82,.12);
+}
+.message-card::before{
+  content:""; position:absolute;
+  inset-inline-start:0; top:0; bottom:0; width:5px;
+  background:linear-gradient(180deg, var(--rose), var(--rose-dark));
+}
+.day-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px; padding-bottom:14px;
+  border-bottom:1px dashed var(--rose-soft);
+}
+.day-label{ display:flex; flex-direction:column; gap:3px; }
+.day-number{ font-size:20px; font-weight:800; color:var(--ink); }
+.day-time{ font-size:11px; color:var(--ink-soft); }
+.day-emoji{ font-size:32px; line-height:1; }
+.message-text{
+  font-size:17px; line-height:1.9; color:var(--ink);
+  white-space:pre-wrap; word-wrap:break-word;
+  margin-bottom:16px;
+}
+.whatsapp-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 20px;
+  background:linear-gradient(135deg, var(--green), var(--green-dark));
+  color:#fff; border:none; border-radius:30px;
+  font-family:'Cairo',Arial,sans-serif;
+  font-size:14px; font-weight:700; cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+  box-shadow:0 6px 18px rgba(37,211,102,.3);
+  text-decoration:none;
+}
+.whatsapp-btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(37,211,102,.4); }
+.whatsapp-btn .icon{ font-size:16px; }
+
+.message-card.locked{ background:linear-gradient(180deg,#faf9fb,#f4f2f6); cursor: default; }
+.message-card.locked::before{ background:#d9d6de; }
+.message-card.locked .day-header{ border-bottom-color:#e4e1e8; }
+.message-card.locked .locked-body{
+  display:flex; align-items:center; gap:12px;
+  padding:14px 4px; color:var(--ink-soft);
+}
+.message-card.locked .locked-body .icon{
+  width:38px; height:38px; flex:0 0 auto;
+  display:flex; align-items:center; justify-content:center;
+  background:#ece9ef; border-radius:50%; font-size:16px;
+}
+.message-card.locked .locked-body .text{ font-size:13.5px; }
+.message-card.locked .locked-body .countdown{
+  font-size:12px; color:var(--rose-dark);
+  font-weight:700; margin-top:2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.final-message-card{
+  background:linear-gradient(160deg, #fff 0%, var(--rose-soft) 140%);
+  border:2px solid rgba(232,115,156,.35);
+  box-shadow:0 15px 40px rgba(196,90,130,.15);
+}
+.final-message-card::before{
+  background:linear-gradient(180deg, var(--rose-dark), var(--rose));
+}
+.final-message-card .day-number{
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.final-message-card .message-text{ font-size:18px; line-height: 2; }
+
+.info-box{
+  width:100%; max-width:640px;
+  background:var(--rose-soft); border-radius:16px;
+  padding:16px 20px; text-align:center;
+  color:var(--rose-dark); font-size:12.5px; line-height:1.8;
+}
+
+@keyframes riseIn{
+  from{ opacity:0; transform:translateY(16px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+@media (max-width:480px){
+  .message-card{ padding:20px; }
+  .day-emoji{ font-size:28px; }
+  .message-text{ font-size:16px; }
+  .final-message-card .message-text{ font-size:17px; }
+  .password-card{ padding:36px 26px; }
+  .whatsapp-btn{ padding:9px 16px; font-size:13px; }
+  .splash-heart-icon{ font-size:65px; }
+  .tutorial-card{ padding:26px 20px; }
+  .tutorial-card h2{ font-size:28px; }
+  .tutorial-item{ padding:12px 13px; }
+  .tutorial-item .tut-icon{ width:36px; height:36px; font-size:17px; }
+}
+</style>
+</head>
+<body>
+
+<div class="splash-screen" id="splashScreen">
+  <div class="splash-hearts" id="splashHearts"></div>
+  <div class="splash-content">
+    <div class="splash-heart-icon">💗</div>
+    <div class="splash-name">Habiba</div>
+    <div class="splash-line"></div>
+    <div class="splash-sub">Eng. Youssef loves you</div>
+    <div class="splash-loader">
+      <div class="splash-loader-fill"></div>
+    </div>
+  </div>
+</div>
+
+<div class="password-screen" id="passwordScreen">
+  <div class="password-card">
+    <div class="lock-badge">💌</div>
+    <h1>Habiba</h1>
+    <div class="sub">ادخل الباسورد عشان تفتحي القلب ده 🔐</div>
+    <input type="password" id="passwordInput" placeholder="• • • •" maxlength="20" />
+    <button onclick="checkPassword()">افتحي القلب ❤️</button>
+    <div class="error-message" id="errorMessage">الباسورد غلط، جرب تاني يا قمر 💔</div>
+  </div>
+</div>
+
+<div class="tutorial-screen" id="tutorialScreen">
+  <div class="tutorial-card">
+    <h2>أهلاً يا حبيبتي 💕</h2>
+    <div class="tutorial-sub">
+      قبل ما نبدأ، خليني أقولك حاجتين<br>
+      عشان تعرفي تلعبي معايا صح 🌹
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">🔐</div>
+      <div class="tut-text">
+        <h4>الباسورد اللي دخّلِتك</h4>
+        <p>ده كان سر بيني وبينك 💌 وكل حاجة جوا هنا معمولة مخصوص ليكي إنتِ بس.</p>
+      </div>
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">💌</div>
+      <div class="tut-text">
+        <h4>الرسايل بتتفتح لوحدها</h4>
+        <p>في 7 رسايل مستنياكي، بس كل رسالة بتتفتح بعد 24 ساعة من اللي قبلها. يعني في كل يوم هتلاقي رسالة جديدة مني ❤️</p>
+      </div>
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">⏳</div>
+      <div class="tut-text">
+        <h4>العدّاد اللي جانبها</h4>
+        <p>لو الرسالة مقفولة، هتلاقي جانبها عدّاد بيقولك فاضل كام ساعة بالظبط عشان تفتحيها.</p>
+      </div>
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">🎵</div>
+      <div class="tut-text">
+        <h4>الأغنية بتاعتنا</h4>
+        <p>لو الأغنية مشتغلتش لوحدها، دوسي على الزرار اللي فوق الرسايل وشغّليها. أحلى لما تسمعيها وإنتِ بتقرأي 🎶</p>
+      </div>
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">💬</div>
+      <div class="tut-text">
+        <h4>زرار "ردّي عليا"</h4>
+        <p>تحت كل رسالة في زرار أخضر، دوسي عليه لو عايزة تردي عليا على الواتساب على طول 💚</p>
+      </div>
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">📊</div>
+      <div class="tut-text">
+        <h4>الشريط اللي فوق</h4>
+        <p>بيوريكي كام رسالة اتفتحت من السبعة. كل ما بيفضل يوم، الشريط بيكمل شوية 💗</p>
+      </div>
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">💗</div>
+      <div class="tut-text">
+        <h4>القلوب الطايرة</h4>
+        <p>دي مجرد ديكور رومانسي، خليها في الخلفية وادعيلي 😂❤️</p>
+      </div>
+    </div>
+
+    <button class="tutorial-btn" onclick="closeTutorial()">
+      فهمت يا قلبي، يلا نبدأ ❤️
+    </button>
+  </div>
+</div>
+
+<div class="hearts-bg" id="heartsBg"></div>
+<div class="container" id="mainContainer">
+  <div class="header">
+    <div class="kicker">💗 رسالة كل يوم</div>
+    <h1>7 أيام من الحب</h1>
+    <p>كل رسالة بتتفتح بعد 24 ساعة من اللي قبلها</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span>الرسائل المفتوحة</span>
+      <span id="progressCount">0 / 7</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="audio-banner" id="audioBanner" onclick="unlockAudio()">
+    🎵 دوسي هنا عشان تشتغل الموسيقى
+  </div>
+
+  <div class="music-box">
+    <div class="note">🎵</div>
+    <div class="meta">
+      <div class="title">أغنية "Habiba" 🎶</div>
+      <div class="sub">شغّليها وانتِ بتقرأي 💕</div>
+      <audio controls loop id="bgMusic" preload="auto">
+        <source src="https://files.catbox.moe/40ghkv.mp3" type="audio/mpeg">
+        متصفحك مش بيدعم الصوت.
+      </audio>
+    </div>
+  </div>
+
+  <div class="messages-container" id="messagesContainer"></div>
+
+  <div class="info-box">
+    💡 كل الرسائل هتتفتح لوحدها مع الوقت • اتمني تكون كل لحظة فيها ذكرى حلوة
+  </div>
+</div>
+
+<script>
+const MY_WHATSAPP = "201210361453";
+const TOTAL_DAYS = 7;
+const WAIT_TIME = 24 * 60 * 60 * 1000;
+const START_TIME_KEY = "yh_start_time";
+const UNLOCKED_KEY = "yh_unlocked";
+const SPLASH_DURATION = 3500;
+const PASSWORD_PLAIN = "love";
+
+function hash(str){
+  let h = 0;
+  for (let i = 0; i < str.length; i++){
+    h = ((h << 5) - h) + str.charCodeAt(i);
+    h |= 0;
+  }
+  return String(h);
+}
+const PASSWORD_HASH = hash(PASSWORD_PLAIN);
+
+const messages = [
+  { day: 1, emoji: "💗", time: "اليوم الأول", text: "بجد أنا مش عارف عملتي فيا إيه، بس بقيت أفرح من قلبي لمجرد إني أشوفك قدامي." },
+  { day: 2, emoji: "🌙", time: "اليوم الثاني", text: "إنتِ مش مجرد حبيبتي، إنتِ الشخص اللي بيخلّي يومي أحلى حتى لو اليوم كله كان زفت." },
+  { day: 3, emoji: "🌹", time: "اليوم الثالث", text: "بحب تفاصيلك الصغيرة أوي، ضحكتك وطريقتك في الكلام وحتى الحاجات اللي إنتِ مش واخدة بالك منها." },
+  { day: 4, emoji: "☀️", time: "اليوم الرابع", text: "نفسي أفضل الشخص اللي لما تزعلي تلاقيه جنبك، ولما تفرحي يبقى أول واحد نفسك تحكيله." },
+  { day: 5, emoji: "💫", time: "اليوم الخامس", text: "ساعات ببقى عايز أقولك كلام كتير أوي، بس أول ما تبقي قدامي بنسى كل حاجة وببقى عايز أفضل قاعد جنبك وخلاص." },
+  { day: 6, emoji: "❤️", time: "اليوم السادس", text: "مهما اتكلمت عن حبي ليكي، هحس إن الكلام قليل على كل الفرحة اللي دخلتيها حياتي." },
+  { day: 7, emoji: "👑", time: "اليوم السابع — الرسالة الأخيرة", text: "يا حبيبتي،\n\nعارفة إيه أكتر حاجة بحبها؟ إنك إنتِ بالذات اللي في حياتي، وإن وسط كل الناس دي قلبي اختارك إنتِ...\n\nيا أحلى حاجة حصلتلي. ❤️", final: true }
+];
+
+function spawnHearts(containerId, count){
+  const bg = document.getElementById(containerId);
+  if (!bg) return;
+  const hearts = ["💗","💕","💖","💓","❤️","🌹"];
+  for (let i = 0; i < count; i++){
+    const h = document.createElement("div");
+    h.className = containerId === "splashHearts" ? "splash-heart" : "heart-float";
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left = Math.random()*100 + "%";
+    h.style.fontSize = (14 + Math.random()*20) + "px";
+    h.style.animationDuration = (8 + Math.random()*10) + "s";
+    h.style.animationDelay = (Math.random()*10) + "s";
+    bg.appendChild(h);
+  }
+}
+
+function getStartTime(){
+  let t = localStorage.getItem(START_TIME_KEY);
+  if (!t){ t = Date.now(); localStorage.setItem(START_TIME_KEY, t); }
+  return parseInt(t);
+}
+function getUnlockTime(dayIndex){ return getStartTime() + (dayIndex * WAIT_TIME); }
+function isUnlocked(dayIndex){
+  const unlocked = JSON.parse(localStorage.getItem(UNLOCKED_KEY) || "[]");
+  if (unlocked.includes(dayIndex)) return true;
+  if (dayIndex === 0) return true;
+  return Date.now() >= getUnlockTime(dayIndex);
+}
+function markUnlocked(dayIndex){
+  const unlocked = JSON.parse(localStorage.getItem(UNLOCKED_KEY) || "[]");
+  if (!unlocked.includes(dayIndex)){
+    unlocked.push(dayIndex);
+    localStorage.setItem(UNLOCKED_KEY, JSON.stringify(unlocked));
+  }
+}
+function formatCountdown(ms){
+  const totalSec = Math.floor(ms / 1000);
+  const h = Math.floor(totalSec / 3600);
+  const m = Math.floor((totalSec % 3600) / 60);
+  const s = totalSec % 60;
+  return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+let audioUnlocked = false;
+function tryAutoPlay(){
+  const audio = document.getElementById("bgMusic");
+  if (!audio) return;
+  audio.volume = 0.6;
+  const p = audio.play();
+  if (p !== undefined){
+    p.then(() => { audioUnlocked = true; hideAudioBanner(); })
+     .catch(() => { showAudioBanner(); setupAutoUnlockOnInteraction(); });
+  }
+}
+function showAudioBanner(){ const b = document.getElementById("audioBanner"); if (b) b.classList.add("show"); }
+function hideAudioBanner(){ const b = document.getElementById("audioBanner"); if (b) b.classList.remove("show"); }
+function unlockAudio(){
+  const audio = document.getElementById("bgMusic");
+  if (!audio) return;
+  audio.play().then(() => { audioUnlocked = true; hideAudioBanner(); }).catch(()=>{});
+}
+function setupAutoUnlockOnInteraction(){
+  const unlock = () => {
+    if (audioUnlocked) return;
+    const audio = document.getElementById("bgMusic");
+    if (!audio) return;
+    audio.play().then(() => { audioUnlocked = true; hideAudioBanner(); removeListeners(); }).catch(()=>{});
+  };
+  const events = ['touchstart', 'click', 'keydown', 'scroll'];
+  const removeListeners = () => events.forEach(ev => document.removeEventListener(ev, unlock));
+  events.forEach(ev => document.addEventListener(ev, unlock, { passive: true }));
+}
+
+function checkPassword(){
+  const input = document.getElementById("passwordInput").value.trim();
+  const error = document.getElementById("errorMessage");
+  if (hash(input) === PASSWORD_HASH){
+    document.getElementById("passwordScreen").classList.remove("show");
+
+    if (sessionStorage.getItem("yh_tutorial_seen") === "1"){
+      document.getElementById("mainContainer").classList.add("show");
+      sessionStorage.setItem("yh_auth", "1");
+      startExperience();
+    } else {
+      document.getElementById("tutorialScreen").classList.add("show");
+      sessionStorage.setItem("yh_auth", "1");
+    }
+  } else {
+    error.classList.add("show");
+    document.getElementById("passwordInput").value = "";
+    setTimeout(()=> error.classList.remove("show"), 2500);
+  }
+}
+
+function closeTutorial(){
+  document.getElementById("tutorialScreen").classList.remove("show");
+  document.getElementById("mainContainer").classList.add("show");
+  sessionStorage.setItem("yh_tutorial_seen", "1");
+  startExperience();
+}
+
+function openWhatsApp(dayNumber){
+  const msg = encodeURIComponent(`عن رسالة اليوم ${dayNumber} 💕`);
+  const url = `https://wa.me/${MY_WHATSAPP}?text=${msg}`;
+  window.open(url, "_blank");
+}
+
+function renderMessages(){
+  const container = document.getElementById("messagesContainer");
+  container.innerHTML = "";
+  messages.forEach((msg, i) => {
+    const card = document.createElement("div");
+    card.className = "message-card";
+    card.style.animationDelay = (i * 0.1) + "s";
+    if (msg.final) card.classList.add("final-message-card");
+    const unlocked = isUnlocked(i);
+    if (!unlocked) card.classList.add("locked");
+    if (unlocked) markUnlocked(i);
+    const header = `
+      <div class="day-header">
+        <div class="day-label">
+          <div class="day-number">اليوم ${msg.day}</div>
+          <div class="day-time">${msg.time}</div>
+        </div>
+        <div class="day-emoji">${unlocked ? msg.emoji : "🔒"}</div>
+      </div>
+    `;
+    let body;
+    if (unlocked){
+      body = `
+        <div class="message-text">${msg.text}</div>
+        <a class="whatsapp-btn" onclick="openWhatsApp(${msg.day}); return false;" href="#">
+          <span class="icon">💬</span>
+          <span>ردّي عليا</span>
+        </a>
+      `;
+    } else {
+      body = `
+        <div class="locked-body">
+          <div class="icon">🔒</div>
+          <div>
+            <div class="text">الرسالة دي لسه مقفولة...</div>
+            <div class="countdown" data-day="${i}">جاري الحساب...</div>
+          </div>
+        </div>
+      `;
+    }
+    card.innerHTML = header + body;
+    container.appendChild(card);
+  });
+  updateProgress();
+  updateCountdowns();
+}
+
+function updateCountdowns(){
+  document.querySelectorAll(".countdown").forEach(el => {
+    const day = parseInt(el.dataset.day);
+    const remain = getUnlockTime(day) - Date.now();
+    if (remain <= 0){ renderMessages(); }
+    else { el.textContent = "⏳ " + formatCountdown(remain); }
+  });
+}
+
+function updateProgress(){
+  const unlockedCount = messages.filter((_, i) => isUnlocked(i)).length;
+  document.getElementById("progressCount").textContent = `${unlockedCount} / ${TOTAL_DAYS}`;
+  const percent = (unlockedCount / TOTAL_DAYS) * 100;
+  document.getElementById("progressFill").style.width = percent + "%";
+}
+
+function startExperience(){
+  renderMessages();
+  tryAutoPlay();
+  setInterval(() => { updateCountdowns(); updateProgress(); }, 1000);
+}
+
+function goToPassword(){
+  const splash = document.getElementById("splashScreen");
+  const passScreen = document.getElementById("passwordScreen");
+  if (splash) splash.classList.add("hide");
+  if (passScreen) passScreen.classList.add("show");
+  const audio = document.getElementById("bgMusic");
+  if (audio){ audio.volume = 0.5; audio.play().catch(()=>{}); }
+}
+
+function runSplash(){
+  if (sessionStorage.getItem("yh_auth") === "1"){
+    document.getElementById("splashScreen").classList.add("hide");
+    document.getElementById("mainContainer").classList.add("show");
+    startExperience();
+    return;
+  }
+
+  const splash = document.getElementById("splashScreen");
+  let done = false;
+
+  const go = () => {
+    if (done) return;
+    done = true;
+    goToPassword();
+  };
+
+  setTimeout(go, SPLASH_DURATION);
+
+  if (splash){
+    splash.addEventListener("click", go, { once: true });
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  spawnHearts("splashHearts", 12);
+  spawnHearts("heartsBg", 18);
+  runSplash();
+
+  const passInput = document.getElementById("passwordInput");
+  if (passInput){
+    passInput.addEventListener("keydown", (e)=>{
+      if (e.key === "Enter") checkPassword();
+    });
+  }
+});
+</script>
+</body>
 </html>
