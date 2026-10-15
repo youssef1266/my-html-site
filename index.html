@@ -36,6 +36,7 @@ body{
   overflow-x:hidden;
 }
 
+/* ========== Splash Screen ========== */
 .splash-screen{
   position:fixed; inset:0; z-index:1000;
   display:flex; align-items:center; justify-content:center; flex-direction:column;
@@ -120,6 +121,7 @@ body{
 }
 @keyframes loadProgress{ 0%{ width:0%; } 100%{ width:100%; } }
 
+/* ========== Password Screen ========== */
 .password-screen{
   position:fixed; inset:0; z-index:999;
   display:none; align-items:center; justify-content:center;
@@ -192,6 +194,7 @@ body{
   75%{ transform: translateX(8px); }
 }
 
+/* ========== شاشة الشرح ========== */
 .tutorial-screen{
   position:fixed; inset:0; z-index:998;
   display:none; align-items:center; justify-content:center;
@@ -284,6 +287,122 @@ body{
 .tutorial-btn:hover{ transform:translateY(-2px); box-shadow:0 16px 32px var(--ring); }
 .tutorial-btn:active{ transform:translateY(0); }
 
+/* ========== عيد الميلاد ========== */
+.birthday-box{
+  width:100%; max-width:640px;
+  background: linear-gradient(135deg, #fff 0%, var(--rose-soft) 130%);
+  border:2px solid rgba(232,115,156,.35);
+  border-radius:18px;
+  padding:22px 24px;
+  margin-bottom:22px;
+  text-align:center;
+  box-shadow: 0 12px 30px rgba(196,90,130,.15);
+  animation: riseIn .6s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.birthday-box::before{
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(232,115,156,.08), transparent 60%);
+  animation: rotateGlow 20s linear infinite;
+}
+@keyframes rotateGlow{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
+
+.birthday-box .bday-content{ position:relative; z-index:1; }
+
+.birthday-box .bday-icon{
+  font-size:34px;
+  margin-bottom:6px;
+  display:inline-block;
+  animation: pulse 2s infinite;
+}
+
+.birthday-box .bday-title{
+  font-family:'Dancing Script', 'Cairo', cursive;
+  font-size:24px;
+  font-weight:700;
+  color:var(--rose-dark);
+  margin-bottom:4px;
+}
+
+.birthday-box .bday-sub{
+  font-size:12.5px;
+  color:var(--ink-soft);
+  margin-bottom:16px;
+}
+
+.countdown-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:8px;
+  margin-top:14px;
+}
+
+.countdown-item{
+  background: #fff;
+  border-radius:12px;
+  padding:12px 4px;
+  box-shadow: 0 4px 12px rgba(196,90,130,.08);
+  border: 1px solid var(--rose-soft);
+}
+
+.countdown-item .num{
+  font-size: clamp(20px, 5vw, 26px);
+  font-weight: 900;
+  color: var(--rose-dark);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.countdown-item .label{
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  margin-top: 6px;
+  font-weight: 700;
+}
+
+.birthday-box.is-today{
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  border-color: var(--rose-dark);
+  animation: bdayParty 1.5s ease infinite;
+}
+.birthday-box.is-today .bday-title,
+.birthday-box.is-today .bday-sub{
+  color: #fff;
+}
+.birthday-box.is-today .countdown-item{
+  background: rgba(255,255,255,.2);
+  border-color: rgba(255,255,255,.3);
+}
+.birthday-box.is-today .countdown-item .num,
+.birthday-box.is-today .countdown-item .label{
+  color: #fff;
+}
+
+@keyframes bdayParty{
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.02); }
+}
+
+.bday-today-msg{
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 8px;
+  line-height: 1.8;
+  grid-column: 1 / -1;
+}
+
+/* ========== Main ========== */
 .hearts-bg{ position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
 .heart-float{ position:absolute; bottom:-50px; font-size:20px; opacity:0; animation: floatUp linear infinite; }
 @keyframes floatUp{
@@ -341,14 +460,18 @@ body{
 }
 .audio-banner.show{ display:block; }
 
+/* ========== Music Box ========== */
 .music-box{
   width:100%; max-width:640px;
   background:var(--paper); border-radius:18px;
   padding:18px 22px;
-  display:flex; align-items:center; gap:16px;
   box-shadow:0 10px 30px rgba(74,74,82,.07);
   margin-bottom:22px;
   animation: riseIn .6s ease;
+}
+.music-box .music-header{
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:16px;
 }
 .music-box .note{
   width:44px; height:44px; flex:0 0 auto;
@@ -360,7 +483,113 @@ body{
 .music-box .meta{ flex:1; min-width:0; }
 .music-box .meta .title{ font-weight:700; font-size:14px; color:var(--ink); }
 .music-box .meta .sub{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
-.music-box audio{ width:100%; margin-top:8px; height:34px; }
+.music-box audio.main-audio{ width:100%; height:34px; }
+
+/* ========== زرار الرجوع للأغنية الأساسية ========== */
+.return-main-btn{
+  display:none;
+  width:100%;
+  margin-top:12px;
+  padding:10px 16px;
+  border:none;
+  border-radius:12px;
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color:#fff;
+  font-family:'Cairo',Arial,sans-serif;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  transition: transform .2s, box-shadow .2s;
+  box-shadow: 0 6px 16px var(--ring);
+}
+.return-main-btn:hover{ transform: translateY(-2px); }
+.return-main-btn.show{ display:block; }
+
+/* ========== قائمة الأغاني ========== */
+.song-list-title{
+  font-size:13px;
+  font-weight:700;
+  color:var(--rose-dark);
+  margin-bottom:10px;
+  padding-right:4px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.song-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.song-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  background: linear-gradient(135deg, #fff, #fdf6f8);
+  border:1px solid var(--rose-soft);
+  border-radius:14px;
+  cursor:pointer;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  font-family:'Cairo',Arial,sans-serif;
+}
+
+.song-item:hover{
+  transform: translateX(-3px);
+  border-color: var(--rose);
+  box-shadow: 0 8px 20px rgba(232,115,156,.15);
+}
+
+.song-item.active{
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  border-color: var(--rose-dark);
+  box-shadow: 0 8px 20px var(--ring);
+}
+
+.song-item.active .song-name,
+.song-item.active .song-num{
+  color:#fff;
+}
+
+.song-item .song-num{
+  width:34px;
+  height:34px;
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: var(--rose-soft);
+  color: var(--rose-dark);
+  border-radius:10px;
+  font-size:16px;
+  font-weight:800;
+  transition: all .2s;
+}
+
+.song-item.active .song-num{
+  background: rgba(255,255,255,.25);
+  color:#fff;
+}
+
+.song-item .song-name{
+  flex:1;
+  font-size:14px;
+  font-weight:700;
+  color: var(--ink);
+  transition: color .2s;
+}
+
+.song-item .song-play{
+  font-size:14px;
+  color: var(--rose-dark);
+  transition: color .2s;
+}
+
+.song-item.active .song-play{
+  color:#fff;
+}
 
 .messages-container{
   width:100%; max-width:640px;
@@ -473,11 +702,19 @@ body{
   .tutorial-card h2{ font-size:28px; }
   .tutorial-item{ padding:12px 13px; }
   .tutorial-item .tut-icon{ width:36px; height:36px; font-size:17px; }
+  .birthday-box{ padding:18px 16px; }
+  .countdown-grid{ gap:6px; }
+  .countdown-item{ padding:10px 2px; }
+  .countdown-item .label{ font-size:9.5px; }
+  .music-box{ padding:16px; }
+  .song-item{ padding:10px 12px; }
+  .song-item .song-name{ font-size:13px; }
 }
 </style>
 </head>
 <body>
 
+<!-- ========== Splash Screen ========== -->
 <div class="splash-screen" id="splashScreen">
   <div class="splash-hearts" id="splashHearts"></div>
   <div class="splash-content">
@@ -491,6 +728,7 @@ body{
   </div>
 </div>
 
+<!-- ========== Password Screen ========== -->
 <div class="password-screen" id="passwordScreen">
   <div class="password-card">
     <div class="lock-badge">💌</div>
@@ -502,6 +740,7 @@ body{
   </div>
 </div>
 
+<!-- ========== شاشة الشرح ========== -->
 <div class="tutorial-screen" id="tutorialScreen">
   <div class="tutorial-card">
     <h2>أهلاً يا حبيبتي 💕</h2>
@@ -530,15 +769,23 @@ body{
       <div class="tut-icon">⏳</div>
       <div class="tut-text">
         <h4>العدّاد اللي جانبها</h4>
-        <p>لو الرسالة مقفولة، هتلاقي جانبها عدّاد بيقولك فاضل كام ساعة بالظبط عشان تفتحيها.</p>
+        <p>لو الرسالة مقفولة، ه��لاقي جانبها عدّاد بيقولك فاضل كام ساعة بالظبط عشان تفتحيها.</p>
+      </div>
+    </div>
+
+    <div class="tutorial-item">
+      <div class="tut-icon">🎂</div>
+      <div class="tut-text">
+        <h4>عدّاد عيد ميلادك</h4>
+        <p>هتلاقي فوق عدّاد بيحسب فاضل كام يوم على عيد ميلادك. ولما اليوم ده يجي، هتظهرلك مفاجأة حلوة 🎉</p>
       </div>
     </div>
 
     <div class="tutorial-item">
       <div class="tut-icon">🎵</div>
       <div class="tut-text">
-        <h4>الأغنية بتاعتنا</h4>
-        <p>لو الأغنية مشتغلتش لوحدها، دوسي على الزرار اللي فوق الرسايل وشغّليها. أحلى لما تسمعيها وإنتِ بتقرأي 🎶</p>
+        <h4>الأغاني بتاعتنا</h4>
+        <p>في 5 أغاني حب مستنياكي. أول أغنية بتشتغل لوحدها، وتحت مشغل الأغاني هتلاقي قائمة تقدري تختاري منها الأغنية اللي تعجبك 🎶</p>
       </div>
     </div>
 
@@ -580,6 +827,34 @@ body{
     <p>كل رسالة بتتفتح بعد 24 ساعة من اللي قبلها</p>
   </div>
 
+  <!-- ========== عيد الميلاد ========== -->
+  <div class="birthday-box" id="birthdayBox">
+    <div class="bday-content">
+      <div class="bday-icon">🎂</div>
+      <div class="bday-title" id="bdayTitle">عيد ميلادك جاي</div>
+      <div class="bday-sub" id="bdaySub">9 يونيو — عدّاد بسيط لحد ما تكملي سنة حلوة جديدة 💕</div>
+
+      <div class="countdown-grid" id="bdayCountdown">
+        <div class="countdown-item">
+          <div class="num" id="cdDays">0</div>
+          <div class="label">يوم</div>
+        </div>
+        <div class="countdown-item">
+          <div class="num" id="cdHours">0</div>
+          <div class="label">ساعة</div>
+        </div>
+        <div class="countdown-item">
+          <div class="num" id="cdMins">0</div>
+          <div class="label">دقيقة</div>
+        </div>
+        <div class="countdown-item">
+          <div class="num" id="cdSecs">0</div>
+          <div class="label">ثانية</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="progress-wrap">
     <div class="progress-info">
       <span>الرسائل المفتوحة</span>
@@ -594,26 +869,41 @@ body{
     🎵 دوسي هنا عشان تشتغل الموسيقى
   </div>
 
+  <!-- ========== Music Box ========== -->
   <div class="music-box">
-    <div class="note">🎵</div>
-    <div class="meta">
-      <div class="title">أغنية "Habiba" 🎶</div>
-      <div class="sub">شغّليها وانتِ بتقرأي 💕</div>
-      <audio controls loop id="bgMusic" preload="auto">
-        <source src="https://files.catbox.moe/40ghkv.mp3" type="audio/mpeg">
-        متصفحك مش بيدعم الصوت.
-      </audio>
+    <div class="music-header">
+      <div class="note">🎵</div>
+      <div class="meta">
+        <div class="title" id="mainSongTitle">أغنية "Habiba" 🎶</div>
+        <div class="sub">شغّليها وانتِ بتقرأي 💕</div>
+      </div>
     </div>
+    <audio controls loop id="bgMusic" class="main-audio" preload="auto">
+      <source src="https://files.catbox.moe/40ghkv.mp3" type="audio/mpeg">
+      متصفحك مش بيدعم الصوت.
+    </audio>
+
+    <!-- زرار الرجوع للأغنية الأساسية -->
+    <button class="return-main-btn" id="returnMainBtn" onclick="returnToMainSong()">
+      🔙 رجوع للأغنية الأساسية
+    </button>
+
+    <!-- قائمة الأغاني -->
+    <div class="song-list-title" style="margin-top:18px;">
+      🎶 أو اختاري أغنية تانية:
+    </div>
+    <div class="song-list" id="songList"></div>
   </div>
 
   <div class="messages-container" id="messagesContainer"></div>
 
   <div class="info-box">
-    💡 كل الرسائل هتتفتح لوحدها مع الوقت • اتمني تكون كل لحظة فيها ذكرى حلوة
+    💡 كل الرسائل هتتفتح لوحدها مع الوقت • اتمنى تكون كل لحظة فيها ذكرى حلوة
   </div>
 </div>
 
 <script>
+/* ========== إعدادات ========== */
 const MY_WHATSAPP = "201210361453";
 const TOTAL_DAYS = 7;
 const WAIT_TIME = 24 * 60 * 60 * 1000;
@@ -622,6 +912,24 @@ const UNLOCKED_KEY = "yh_unlocked";
 const SPLASH_DURATION = 3500;
 const PASSWORD_PLAIN = "love";
 
+/* ========== عيد الميلاد ========== */
+const BIRTHDAY_MONTH = 6; // يونيو
+const BIRTHDAY_DAY = 9;
+
+/* ========== الأغاني ========== */
+const MAIN_SONG = {
+  name: 'أغنية "Habiba" 🎶',
+  url: "https://files.catbox.moe/40ghkv.mp3"
+};
+
+const PLAYLIST = [
+  { name: "حمزة نمرة - غروب", url: "https://files.catbox.moe/6kyjh4.m4a", emoji: "🌅" },
+  { name: "توليت - حبيبي ليه", url: "https://files.catbox.moe/dllf23.m4a", emoji: "💕" },
+  { name: "توليت - ماتيجي أعدي عليكي", url: "https://files.catbox.moe/q7cwfm.m4a", emoji: "🌙" },
+  { name: "Lege-Cy - بيتادين", url: "https://files.catbox.moe/7ltv50.m4a", emoji: "🎧" }
+];
+
+/* ========== دالة الهاش ========== */
 function hash(str){
   let h = 0;
   for (let i = 0; i < str.length; i++){
@@ -632,6 +940,7 @@ function hash(str){
 }
 const PASSWORD_HASH = hash(PASSWORD_PLAIN);
 
+/* ========== الرسائل ========== */
 const messages = [
   { day: 1, emoji: "💗", time: "اليوم الأول", text: "بجد أنا مش عارف عملتي فيا إيه، بس بقيت أفرح من قلبي لمجرد إني أشوفك قدامي." },
   { day: 2, emoji: "🌙", time: "اليوم الثاني", text: "إنتِ مش مجرد حبيبتي، إنتِ الشخص اللي بيخلّي يومي أحلى حتى لو اليوم كله كان زفت." },
@@ -642,6 +951,7 @@ const messages = [
   { day: 7, emoji: "👑", time: "اليوم السابع — الرسالة الأخيرة", text: "يا حبيبتي،\n\nعارفة إيه أكتر حاجة بحبها؟ إنك إنتِ بالذات اللي في حياتي، وإن وسط كل الناس دي قلبي اختارك إنتِ...\n\nيا أحلى حاجة حصلتلي. ❤️", final: true }
 ];
 
+/* ========== قلوب طايرة ========== */
 function spawnHearts(containerId, count){
   const bg = document.getElementById(containerId);
   if (!bg) return;
@@ -658,6 +968,7 @@ function spawnHearts(containerId, count){
   }
 }
 
+/* ========== الوقت والتقدم ========== */
 function getStartTime(){
   let t = localStorage.getItem(START_TIME_KEY);
   if (!t){ t = Date.now(); localStorage.setItem(START_TIME_KEY, t); }
@@ -680,15 +991,73 @@ function markUnlocked(dayIndex){
 function formatCountdown(ms){
   const totalSec = Math.floor(ms / 1000);
   const h = Math.floor(totalSec / 3600);
-  const m = Math.floor((totalSec % 3600) / 60);
+  const m = Math.floor((totalSec % (1000 * 60 * 60)) / (1000 * 60));
   const s = totalSec % 60;
   return `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
 }
 
+/* ========== عيد الميلاد ========== */
+function getNextBirthday(){
+  const now = new Date();
+  const year = now.getFullYear();
+  let bday = new Date(year, BIRTHDAY_MONTH - 1, BIRTHDAY_DAY, 0, 0, 0);
+  if (now > bday){
+    bday = new Date(year + 1, BIRTHDAY_MONTH - 1, BIRTHDAY_DAY, 0, 0, 0);
+  }
+  return bday;
+}
+
+function isBirthdayToday(){
+  const now = new Date();
+  return now.getMonth() === (BIRTHDAY_MONTH - 1) && now.getDate() === BIRTHDAY_DAY;
+}
+
+function updateBirthdayCountdown(){
+  const box = document.getElementById("birthdayBox");
+  if (!box) return;
+
+  if (isBirthdayToday()){
+    box.classList.add("is-today");
+    document.getElementById("bdayTitle").textContent = "🎉 كل سنة وإنتِ طيبة يا حبيبتي 🎉";
+    document.getElementById("bdaySub").textContent = "النهاردة يومك إنتِ، ويوم ما قلبي فرحان بيكي 💕";
+    document.getElementById("bdayCountdown").innerHTML = `
+      <div class="bday-today-msg">
+        🎂 عيد ميلاد سعيد يا أحلى حاجة في حياتي 🎂<br>
+        <span style="font-size:14px;font-weight:600;opacity:.95;">
+          عقبال 100 سنة وإنتِ جانبي ❤️
+        </span>
+      </div>
+    `;
+    return;
+  }
+
+  const bday = getNextBirthday();
+  const diff = bday - new Date();
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const cdDays = document.getElementById("cdDays");
+  const cdHours = document.getElementById("cdHours");
+  const cdMins = document.getElementById("cdMins");
+  const cdSecs = document.getElementById("cdSecs");
+
+  if (cdDays) cdDays.textContent = days;
+  if (cdHours) cdHours.textContent = String(hours).padStart(2, "0");
+  if (cdMins) cdMins.textContent = String(mins).padStart(2, "0");
+  if (cdSecs) cdSecs.textContent = String(secs).padStart(2, "0");
+}
+
+/* ========== الصوت ========== */
 let audioUnlocked = false;
+let currentSongMode = 'main'; // 'main' أو رقم الأغنية في البلاي ليست
+
 function tryAutoPlay(){
   const audio = document.getElementById("bgMusic");
   if (!audio) return;
+  audio.loop = true; // الأغنية الأساسية بتلف
   audio.volume = 0.6;
   const p = audio.play();
   if (p !== undefined){
@@ -715,6 +1084,105 @@ function setupAutoUnlockOnInteraction(){
   events.forEach(ev => document.addEventListener(ev, unlock, { passive: true }));
 }
 
+/* ========== مشغل الأغاني ========== */
+function renderSongList(){
+  const list = document.getElementById("songList");
+  if (!list) return;
+  list.innerHTML = "";
+  PLAYLIST.forEach((song, i) => {
+    const item = document.createElement("div");
+    item.className = "song-item";
+    item.dataset.index = i;
+    item.innerHTML = `
+      <div class="song-num">${song.emoji}</div>
+      <div class="song-name">${song.name}</div>
+      <div class="song-play">▶</div>
+    `;
+    item.addEventListener("click", () => playPlaylistSong(i));
+    list.appendChild(item);
+  });
+}
+
+function playPlaylistSong(index){
+  const audio = document.getElementById("bgMusic");
+  const song = PLAYLIST[index];
+  if (!audio || !song) return;
+
+  // لو نفس الأغنية شغالة دلوقتي، اعمل toggle
+  if (currentSongMode === index && !audio.paused){
+    audio.pause();
+    updateActiveSong(index, song.name, false);
+    return;
+  }
+
+  audio.loop = false; // أغاني القائمة ملهاش loop
+  audio.src = song.url;
+  audio.load();
+  audio.play().then(() => {
+    audioUnlocked = true;
+    hideAudioBanner();
+    currentSongMode = index;
+    updateActiveSong(index, song.name, true);
+    showReturnBtn();
+  }).catch(()=>{});
+}
+
+function updateActiveSong(index, name, isPlaying){
+  // صفّر كل الأغاني
+  document.querySelectorAll(".song-item").forEach(el => {
+    el.classList.remove("active");
+    const playIcon = el.querySelector(".song-play");
+    if (playIcon) playIcon.textContent = "▶";
+  });
+
+  // فعّل الأغنية الحالية لو شغالة
+  if (isPlaying){
+    const active = document.querySelector(`.song-item[data-index="${index}"]`);
+    if (active){
+      active.classList.add("active");
+      const playIcon = active.querySelector(".song-play");
+      if (playIcon) playIcon.textContent = "🔊";
+    }
+    document.getElementById("mainSongTitle").textContent = "🎶 " + name;
+  } else {
+    // الأغنية متوقفة
+    document.getElementById("mainSongTitle").textContent = "⏸ " + name + " (متوقفة)";
+  }
+}
+
+function showReturnBtn(){
+  const btn = document.getElementById("returnMainBtn");
+  if (btn) btn.classList.add("show");
+}
+
+function hideReturnBtn(){
+  const btn = document.getElementById("returnMainBtn");
+  if (btn) btn.classList.remove("show");
+}
+
+function returnToMainSong(){
+  const audio = document.getElementById("bgMusic");
+  if (!audio) return;
+  audio.loop = true;
+  audio.src = MAIN_SONG.url;
+  audio.load();
+  audio.play().then(() => {
+    currentSongMode = 'main';
+    resetToMainSong();
+    hideReturnBtn();
+  }).catch(()=>{});
+}
+
+function resetToMainSong(){
+  document.querySelectorAll(".song-item").forEach(el => {
+    el.classList.remove("active");
+    const playIcon = el.querySelector(".song-play");
+    if (playIcon) playIcon.textContent = "▶";
+  });
+  document.getElementById("mainSongTitle").textContent = MAIN_SONG.name;
+}
+
+/* ========== الباسورد ========== */
 function checkPassword(){
   const input = document.getElementById("passwordInput").value.trim();
   const error = document.getElementById("errorMessage");
@@ -736,6 +1204,7 @@ function checkPassword(){
   }
 }
 
+/* ========== شاشة الشرح ========== */
 function closeTutorial(){
   document.getElementById("tutorialScreen").classList.remove("show");
   document.getElementById("mainContainer").classList.add("show");
@@ -743,12 +1212,14 @@ function closeTutorial(){
   startExperience();
 }
 
+/* ========== واتساب ========== */
 function openWhatsApp(dayNumber){
   const msg = encodeURIComponent(`عن رسالة اليوم ${dayNumber} 💕`);
   const url = `https://wa.me/${MY_WHATSAPP}?text=${msg}`;
   window.open(url, "_blank");
 }
 
+/* ========== الرندر ========== */
 function renderMessages(){
   const container = document.getElementById("messagesContainer");
   container.innerHTML = "";
@@ -814,10 +1285,17 @@ function updateProgress(){
 
 function startExperience(){
   renderMessages();
+  renderSongList();
   tryAutoPlay();
-  setInterval(() => { updateCountdowns(); updateProgress(); }, 1000);
+  updateBirthdayCountdown();
+  setInterval(() => {
+    updateCountdowns();
+    updateProgress();
+    updateBirthdayCountdown();
+  }, 1000);
 }
 
+/* ========== الدخلة ========== */
 function goToPassword(){
   const splash = document.getElementById("splashScreen");
   const passScreen = document.getElementById("passwordScreen");
@@ -851,6 +1329,7 @@ function runSplash(){
   }
 }
 
+/* ========== التشغيل ========== */
 window.addEventListener("DOMContentLoaded", () => {
   spawnHearts("splashHearts", 12);
   spawnHearts("heartsBg", 18);
@@ -860,6 +1339,17 @@ window.addEventListener("DOMContentLoaded", () => {
   if (passInput){
     passInput.addEventListener("keydown", (e)=>{
       if (e.key === "Enter") checkPassword();
+    });
+  }
+
+  // لما الأغنية تخلص → ارجع للأغنية الأساسية
+  const audioEl = document.getElementById("bgMusic");
+  if (audioEl){
+    audioEl.addEventListener("ended", () => {
+      // لو كانت أغنية من القائمة، ارجع للأساسية
+      if (currentSongMode !== 'main'){
+        returnToMainSong();
+      }
     });
   }
 });
