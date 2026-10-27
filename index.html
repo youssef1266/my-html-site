@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Habiba & Youssef ❤️</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- شاشة التعليمات (الترحيب) -->
+<div class="welcome-page" id="welcomePage">
+  <div class="welcome-box">
+    <div class="insta-logo" style="font-size: 38px;">Habiba ❤️ Youssef</div>
+    <div class="welcome-text">
+      <p>أهلاً بيكي في مكاننا الخاص جداً ❤️</p>
+      <p>المكان ده اتعمل مخصوص عشان نتكلم فيه براحتنا، من غير أي إزعاج أو إشعارات، ومحدش يقدر يشوفه غيرنا إحنا الاتنين.</p>
+      <p style="margin-top: 15px; font-weight: bold; color: #e6396c;">بصي، ده المكان بتاعنا إحنا بس.. ❤️</p>
+      
+      <div class="creds">
+        <p style="font-size: 14px; margin-bottom: 5px; color: #666;">للدخول، استخدمي الباسورد بتاعك:</p>
+        <span>الباسورد: <b>love</b></span>
+      </div>
+    </div>
+    <button class="insta-btn" id="startBtn">يلا ندخل ❤️</button>
+  </div>
+</div>
+
+<!-- شاشة تسجيل الدخول -->
+<div class="login-page" id="loginPage" style="display: none;">
+  <div class="login-box">
+    <div class="insta-logo">Chat</div>
+    <form class="login-form" onsubmit="return false;">
+      <div class="password-wrapper">
+        <input type="password" id="passwordInput" class="insta-input" placeholder="Password" autocomplete="current-password">
+        <button type="button" class="toggle-password-btn" id="togglePassword">Show</button>
+      </div>
+      <button type="button" class="insta-btn" id="loginBtn">Log in</button>
+      <div class="error-message" id="errorMessage"></div>
+    </form>
+  </div>
+</div>
+
+<!-- شاشة الشات -->
+<div class="chat-page" id="chatPage">
+  <div class="chat-header">
+    <div class="header-left">
+      <button class="back-arrow" id="backArrow">←</button>
+      <div class="user-avatar" id="userAvatar">👩‍🦰</div>
+      <div class="header-info">
+        <h2 id="headerName">Habiba</h2>
+        <p id="headerStatus">Active now</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" id="callBtn" title="Call">📞</button>
+      <button class="header-btn" id="infoBtn" title="Info">ℹ️</button>
+    </div>
+  </div>
+
+  <div class="messages-container" id="messagesContainer">
+    <div class="loading-text" id="loadingText">Loading messages...</div>
+  </div>
+
+  <div class="input-area">
+    <div class="input-actions">
+      <button class="action-btn" id="emojiBtn">😊</button>
+      <button class="action-btn" id="imageBtn">📷</button>
+    </div>
+    <div class="input-field">
+      <input type="text" id="messageInput" placeholder="Message..." autocomplete="off">
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+    <button class="send-btn" id="sendBtn" disabled>❤️</button>
+  </div>
+
+  <div class="emoji-picker" id="emojiPicker"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
